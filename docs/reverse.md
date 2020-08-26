@@ -12,6 +12,11 @@ GET/POST https://www.pn-trading.se/paplatsja.aspx?id=CrystalRetailSwedenAB4&rand
 ### Get all items in page view
 https://psauction.se/search/antal=100&sida=1
 
+.auctions-list--item
+    titel: .content h3 a:text
+    link: .content h3 a:href
+    image: .offer-image > span:style background-image:url('*')
+
 ## Auktionstorget
 
 POST https://auktion.kronofogden.se/auk/w.objectlist?inC=KFM&inA=WEB

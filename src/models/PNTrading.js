@@ -1,5 +1,4 @@
 import axios from 'axios'
-import cheerio from 'cheerio'
 
 const BASE_URL = 'https://www.pn-trading.se'
 class PNTrading {
