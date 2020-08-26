@@ -1,0 +1,18 @@
+{
+  "name": "ascout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "backpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "backpack-core": "^0.8.4"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "cheerio": "^1.0.0-rc.3"
+  }
+}
