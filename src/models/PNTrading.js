@@ -2,11 +2,14 @@ import axios from 'axios'
 
 const BASE_URL = 'https://www.pn-trading.se'
 class PNTrading {
-  async getData () {
+  async getData (index = -1) {
     const response = await axios.post(`${BASE_URL}/auktionsja.aspx`)
     const auctionIds = response.data.map(({ paplatsnamn }) => paplatsnamn)
-    const items = await this.getItems(auctionIds[1])
-    return items
+    const promises = index === -1
+      ? auctionIds.map((id) => this.getItems(id))
+      : [this.getItems(auctionIds[index])]
+    const data = await Promise.all(promises)
+    return data
   }
 
   async getItems (auctionId) {
