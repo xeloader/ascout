@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "backpack"
+    "dev": "backpack",
+    "build": "backpack build"
   },
   "author": "",
   "license": "ISC",
@@ -12,7 +13,10 @@
     "backpack-core": "^0.8.4"
   },
   "dependencies": {
+    "argparse": "^2.0.0",
     "axios": "^0.20.0",
-    "cheerio": "^1.0.0-rc.3"
+    "cheerio": "^1.0.0-rc.3",
+    "flat": "^5.0.2",
+    "fuse.js": "^6.4.1"
   }
 }

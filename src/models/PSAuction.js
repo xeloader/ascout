@@ -2,14 +2,23 @@ import axios from 'axios'
 import cheerio from 'cheerio'
 
 const BASE_URL = 'https://www.psauction.se'
-class PNTrading {
+class PSAuction {
   async getData (page = 1) {
-    const url = `${BASE_URL}/search/antal=100&sida=${page}`
+    const url = `${BASE_URL}/search?antal=100&sida=${page}`
     console.log(url)
     const response = await axios.get(url)
-    const $ = cheerio.load(response.data)
-    const items = $('.content li')
     console.log(response.data)
+    const $ = cheerio.load(response.data)
+
+    const codedItems = $('.auctions-list')
+    codedItems.each((item) => {
+      console.log(item)
+    })
+    if (codedItems.length > 0) {
+      const items = codedItems[0].attr()
+    }
+    console.log(codedItems)
+    return
     const result = items.map((index) => {
       const item = $(items[index])
       const image = item.find('.image').attr('style')
@@ -25,4 +34,4 @@ class PNTrading {
   }
 }
 
-export default PNTrading
+export default PSAuction
