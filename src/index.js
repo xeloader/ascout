@@ -1,5 +1,4 @@
 import fs from 'fs'
-import Fuse from 'fuse.js'
 
 import Budi from './models/Budi'
 import NA from './models/NetAuktion'
@@ -9,7 +8,6 @@ import PSA from './models/PSAuction'
 
 import { ArgumentParser } from 'argparse'
 import { version } from '../package.json'
-import { exit } from 'process'
 
 function flatten (arr) {
   return arr.reduce(function (flat, toFlatten) {
@@ -19,6 +17,7 @@ function flatten (arr) {
 
 const Auctions = {
   pnt: new PT(),
+  psa: new PSA(),
   na: new NA(),
   budi: new Budi(),
   units: new Units()
@@ -28,10 +27,12 @@ const parser = new ArgumentParser({
 })
 
 const searchFor = (keyword, data) => {
-  const fuse = new Fuse(data, {
-    keys: ['title']
-  })
-  return keyword.map((kw) => fuse.search(kw))
+  return flatten(
+    keyword.map((kw) =>
+      data.filter(({ title }) =>
+        title && title.toLowerCase().indexOf(kw) > -1)
+    )
+  )
 }
 
 parser.addArgument('-v', '--version', { action: 'version', version })
@@ -56,7 +57,7 @@ try {
   console.log('no cache found')
 }
 
-if (!cached) {
+if (!cached || args.force) {
   const promises = services.map((service) => Auctions[service].getData(args.page))
   Promise.all(promises)
     .then((data) => {
