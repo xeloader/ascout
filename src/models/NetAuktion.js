@@ -28,8 +28,8 @@ class Budi {
     const items = $('.categori-grid > article')
     const result = items.map((index) => {
       const item = $(items[index])
-      const link = item.find('.link-div a').attr('href')
-      const image = item.find('.display-img img').attr('src')
+      const link = BASE_URL + item.find('.link-div a').attr('href')
+      const image = BASE_URL + item.find('.display-img img').attr('src')
       const title = (item.find('.object-card-title-text').text().trim())
       return { link, image, title }
     })

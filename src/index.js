@@ -17,7 +17,7 @@ function flatten (arr) {
 
 const Auctions = {
   pnt: new PT(),
-  psa: new PSA(),
+  // psa: new PSA(),
   na: new NA(),
   budi: new Budi(),
   units: new Units()
@@ -27,9 +27,10 @@ const parser = new ArgumentParser({
 })
 
 const searchFor = (keyword, data) => {
+  const { items } = data
   return flatten(
     keyword.map((kw) =>
-      data.filter(({ title }) =>
+      items.filter(({ title }) =>
         title && title.toLowerCase().indexOf(kw) > -1)
     )
   )
@@ -63,8 +64,12 @@ if (!cached || args.force) {
     .then((data) => {
       console.log('caching ' + id)
       const flattened = flatten(data)
-      fs.writeFileSync(cacheName, JSON.stringify(flattened))
-      console.log(searchFor(args.SEARCH, flattened))
+      const formatted = {
+        updatedAt: new Date().toISOString(),
+        items: flattened
+      }
+      fs.writeFileSync(cacheName, JSON.stringify(formatted))
+      console.log(searchFor(args.SEARCH, formatted))
     })
 } else {
   const parsed = JSON.parse(cached)
