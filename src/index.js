@@ -63,10 +63,13 @@ if (!cached || args.force) {
       fs.writeFileSync(cacheName, jsonContent)
       if (args.output) {
         fs.writeFileSync(args.output, jsonContent)
-      } else {
-        console.log(jsonContent)
       }
+      console.log(jsonContent)
     })
 } else {
-  console.log(cached.toString())
+  const jsonContent = cached.toString()
+  if (args.output) {
+    fs.writeFileSync(args.output, jsonContent)
+  }
+  console.log(jsonContent)
 }
