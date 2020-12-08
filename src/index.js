@@ -26,21 +26,12 @@ const parser = new ArgumentParser({
   description: 'Search for konkursauktioner'
 })
 
-const searchFor = (keyword, data) => {
-  const { items } = data
-  return flatten(
-    keyword.map((kw) =>
-      items.filter(({ title }) =>
-        title && title.toLowerCase().indexOf(kw) > -1)
-    )
-  )
-}
-
-parser.addArgument('-v', '--version', { action: 'version', version })
-parser.addArgument('-f', '--force', { help: 'Do not use cache' })
-parser.addArgument('-p', '--page', { type: 'int', help: 'Page to fetch, not set will get all.' })
-parser.addArgument('-s', '--service', { help: 'Service to check, not set will get from all.' })
-parser.addArgument('SEARCH', { nargs: '*', help: 'The keyword to search for' })
+parser.add_argument('-v', '--version', { action: 'version', version })
+parser.add_argument('-f', '--force', { help: 'Do not use cache' })
+parser.add_argument('-p', '--page', { type: 'int', help: 'Page to fetch, not set will get all.' })
+parser.add_argument('-s', '--service', { help: 'Service to check, not set will get from all.' })
+parser.add_argument('-o', '--output', { help: 'Write output to file, default stdout' })
+parser.add_argument('SEARCH', { nargs: '*', help: 'The keyword to search for' })
 
 const args = parser.parse_args()
 console.log(args)
