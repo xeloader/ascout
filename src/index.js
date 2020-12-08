@@ -22,6 +22,7 @@ const Auctions = {
   budi: new Budi(),
   units: new Units()
 }
+
 const parser = new ArgumentParser({
   description: 'Search for konkursauktioner'
 })
@@ -34,7 +35,6 @@ parser.add_argument('-o', '--output', { help: 'Write output to file, default std
 parser.add_argument('SEARCH', { nargs: '*', help: 'The keyword to search for' })
 
 const args = parser.parse_args()
-console.log(args)
 
 const today = new Date()
 const services = args.service
@@ -59,10 +59,14 @@ if (!cached || args.force) {
         updatedAt: new Date().toISOString(),
         items: flattened
       }
-      fs.writeFileSync(cacheName, JSON.stringify(formatted))
-      console.log(searchFor(args.SEARCH, formatted))
+      const jsonContent = JSON.stringify(formatted)
+      fs.writeFileSync(cacheName, jsonContent)
+      if (args.output) {
+        fs.writeFileSync(args.output, jsonContent)
+      } else {
+        console.log(jsonContent)
+      }
     })
 } else {
-  const parsed = JSON.parse(cached)
-  console.log(searchFor(args.SEARCH, parsed))
+  console.log(cached.toString())
 }
