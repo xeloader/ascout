@@ -17,7 +17,7 @@ function flatten (arr) {
 
 const Auctions = {
   pnt: new PT(),
-  // psa: new PSA(),
+  psa: new PSA(),
   na: new NA(),
   budi: new Budi(),
   units: new Units()
