@@ -27,7 +27,7 @@ class Budi {
     const items = $('#items-wrapper .yeyetest')
     const formatted = items.map((i) => {
       const item = $(items[i])
-      const link = BASE_URL + item.find('a').attr('href')
+      const link = BASE_URL + item.find('.ad-title a').attr('href')
       const image = BASE_URL + item.find('img').attr('src')
       const title = item.find('.ad-title').text().trim()
       return { link, image, title }
