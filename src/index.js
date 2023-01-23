@@ -5,6 +5,7 @@ import NA from './models/NetAuktion'
 import PT from './models/PNTrading'
 import Units from './models/Units'
 import PSA from './models/PSAuction'
+import Riksauktioner from './models/Riksauktioner'
 
 import { ArgumentParser } from 'argparse'
 import { version } from '../package.json'
@@ -20,7 +21,8 @@ const Auctions = {
   psa: new PSA(),
   na: new NA(),
   budi: new Budi(),
-  units: new Units()
+  units: new Units(),
+  riks: new Riksauktioner()
 }
 
 const parser = new ArgumentParser({
@@ -50,9 +52,12 @@ try {
 }
 
 if (!cached || args.force) {
+  console.log({ services })
   const promises = services.map((service) => Auctions[service].getData(args.page))
   Promise.allSettled(promises)
     .then((settled) => {
+      const failed = settled.filter(({ status }) => status === 'rejected')
+      console.log('failed promises', failed)
       const data = settled
         .filter(({status}) => status !== 'rejected')
         .map(({ value }) => value)
