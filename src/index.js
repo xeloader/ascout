@@ -28,7 +28,7 @@ const parser = new ArgumentParser({
 })
 
 parser.add_argument('-v', '--version', { action: 'version', version })
-parser.add_argument('-f', '--force', { help: 'Do not use cache' })
+parser.add_argument('-f', '--force', { action: 'store_true', help: 'Do not use cache' })
 parser.add_argument('-p', '--page', { type: 'int', help: 'Page to fetch, not set will get all.' })
 parser.add_argument('-s', '--service', { help: 'Service to check, not set will get from all.' })
 parser.add_argument('-o', '--output', { help: 'Write output to file, default stdout' })
@@ -51,8 +51,11 @@ try {
 
 if (!cached || args.force) {
   const promises = services.map((service) => Auctions[service].getData(args.page))
-  Promise.all(promises)
-    .then((data) => {
+  Promise.allSettled(promises)
+    .then((settled) => {
+      const data = settled
+        .filter(({status}) => status !== 'rejected')
+        .map(({ value }) => value)
       console.log('caching ' + id)
       const flattened = flatten(data)
       const formatted = {
