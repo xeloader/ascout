@@ -1,0 +1,11 @@
+{
+  "include": ["src/index.js"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "moduleResolution": "nodenext",
+    "module": "NodeNext"
+  }
+}

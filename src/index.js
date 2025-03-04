@@ -10,12 +10,6 @@ import Riksauktioner from './models/Riksauktioner'
 import { ArgumentParser } from 'argparse'
 import { version } from '../package.json'
 
-function flatten (arr) {
-  return arr.reduce(function (flat, toFlatten) {
-    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
-  }, [])
-}
-
 const Auctions = {
   pnt: new PT(),
   psa: new PSA(),
@@ -62,7 +56,7 @@ if (!cached || args.force) {
         .filter(({status}) => status !== 'rejected')
         .map(({ value }) => value)
       console.log('caching ' + id)
-      const flattened = flatten(data)
+      const flattened = data.flat()
       const formatted = {
         updatedAt: new Date().toISOString(),
         items: flattened
