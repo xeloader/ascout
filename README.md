@@ -8,9 +8,9 @@ https://ascout.ingman.me
 
 ## How to
 
-1. `yarn`
-2. `yarn build`
-3. `node build/main.js -o latest.json`
+1. `npm i`
+2. `npm run build`
+3. `node dist/main.js -o latest.json`
 4. In ascout-frontend add `latest.json` to `public/assets/latest.json`
 5. Bing bang bong
 
